@@ -54,6 +54,11 @@
                     <span
                         :key="d.id"
                         class="cursor-pointer transition hover:text-amber-700 border-solid hover:border-b-2 hover:border-amber-700"
+                        :class="{
+                            'text-amber-700 border-solid border-b-2 border-amber-700':
+                                activeId === d.id,
+                        }"
+                        @click="handleActive(d.id)"
                         >{{ d.title }}</span
                     >
                 </li>
@@ -66,7 +71,8 @@
 import Logo from './Logo.vue';
 import { ref, onMounted, toRefs } from 'vue';
 
-let isOpen = ref(false);
+const isOpen = ref(false);
+const activeId = ref('');
 let windowWidth = ref(window.innerWidth);
 const mobileViewpoint = 1024;
 
@@ -83,6 +89,8 @@ onMounted(() => {
 });
 
 const handleOpen = () => (isOpen.value = !isOpen.value);
+
+const handleActive = (id) => (activeId.value = id);
 
 const props = defineProps(['data']);
 const { data } = toRefs(props);
