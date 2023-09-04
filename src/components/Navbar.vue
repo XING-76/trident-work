@@ -7,31 +7,8 @@
                 class="md:hidden block cursor-pointer font-bold hover:text-amber-700 tansition"
                 @click="handleOpen"
             >
-                <!-- open-icon -->
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    class="w-6 h-6"
-                    v-if="!isOpen"
-                >
-                    <g>
-                        <path fill="none" d="M0 0h24v24H0z" />
-                        <path
-                            d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z"
-                        />
-                    </g>
-                </svg>
-                <!-- close-icon -->
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 -960 960 960"
-                    class="w-6 h-6"
-                    v-if="isOpen"
-                >
-                    <path
-                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-                    />
-                </svg>
+                <OpenIcon v-if="!isOpen" />
+                <CloseIcon v-if="isOpen" />
             </div>
             <!-- title -->
             <div class="font-bold md:text-4xl text-xl md:p-5">
@@ -84,7 +61,9 @@
 </template>
 
 <script setup>
-import Logo from './Logo.vue';
+import Logo from '@/ui/Logo.vue';
+import OpenIcon from '@/ui/OpenIcon.vue';
+import CloseIcon from '@/ui/CloseIcon.vue';
 import { ref, toRefs, onMounted } from 'vue';
 
 const isOpen = ref(false);
