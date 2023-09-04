@@ -12,7 +12,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     class="w-6 h-6"
-                    v-if="isOpen"
+                    v-if="!isOpen"
                 >
                     <g>
                         <path fill="none" d="M0 0h24v24H0z" />
@@ -26,7 +26,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
                     class="w-6 h-6"
-                    v-if="!isOpen"
+                    v-if="isOpen"
                 >
                     <path
                         d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
@@ -45,12 +45,28 @@
             </div>
         </div>
         <!-- nav-link -->
-        <div
-            class="font-semibold text-center"
-            :class="isOpen ? 'hidden' : 'block'"
-        >
-            <ul class="flex flex-col mb-3">
+        <div class="font-semibold text-center">
+            <ul class="flex flex-col mb-3" v-if="!isMobile">
                 <li class="m-3" v-for="d in data">
+                    <span
+                        :key="d.id"
+                        class="cursor-pointer transition hover:text-amber-700 border-solid hover:border-b-2 hover:border-amber-700"
+                        :class="{
+                            'text-amber-700 border-solid border-b-2 border-amber-700':
+                                activeId === d.id,
+                        }"
+                        @click="handleActive(d.id)"
+                        >{{ d.title }}</span
+                    >
+                </li>
+            </ul>
+            <!-- mobile -->
+            <ul class="flex flex-col mb-3" v-if="isMobile">
+                <li
+                    class="m-3"
+                    v-for="d in data"
+                    :class="isOpen ? 'block' : 'hidden'"
+                >
                     <span
                         :key="d.id"
                         class="cursor-pointer transition hover:text-amber-700 border-solid hover:border-b-2 hover:border-amber-700"
@@ -69,24 +85,30 @@
 
 <script setup>
 import Logo from './Logo.vue';
-import { ref, onMounted, toRefs } from 'vue';
+import { ref, toRefs, onMounted } from 'vue';
 
 const isOpen = ref(false);
+const isMobile = ref(false);
 const activeId = ref('');
-let windowWidth = ref(window.innerWidth);
+const windowWidth = ref(window.innerWidth);
 const mobileViewpoint = 1024;
 
 onMounted(() => {
-    window.addEventListener('resize', function () {
-        windowWidth.value = window.innerWidth;
-        if (windowWidth.value > mobileViewpoint) {
-            isOpen.value = false;
-        }
-        if (windowWidth.value <= mobileViewpoint && !isOpen.value) {
-            isOpen.value = true;
-        }
-    });
+    if (windowWidth.value <= mobileViewpoint) {
+        isMobile.value = true;
+    }
+    window.addEventListener('resize', handleResize);
 });
+
+const handleResize = () => {
+    windowWidth.value = window.innerWidth;
+    if (windowWidth.value > mobileViewpoint) {
+        isMobile.value = false;
+    }
+    if (windowWidth.value <= mobileViewpoint) {
+        isMobile.value = true;
+    }
+};
 
 const handleOpen = () => (isOpen.value = !isOpen.value);
 

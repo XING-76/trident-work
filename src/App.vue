@@ -22,9 +22,9 @@ import Banner from '@/components/Banner.vue';
 import BannerBox from '@/components/BannerBox.vue';
 import { ref, onBeforeMount } from 'vue';
 
-let bannerData = ref({});
-let bannerBoxData = ref([]);
-let navbarData = ref([]);
+const bannerData = ref({});
+const bannerBoxData = ref([]);
+const navbarData = ref([]);
 
 onBeforeMount(async () => {
     try {
