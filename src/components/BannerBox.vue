@@ -1,6 +1,6 @@
 <template>
     <div class="flex md:flex-row flex-col font-bold h-full">
-        <div class="flex gap-3 md:w-1/3 p-5" v-for="d in data">
+        <div class="flex gap-3 md:w-1/3 p-5" v-for="d in data" :key="d.id">
             <div class="text-4xl [writing-mode:vertical-lr]">
                 <span class="relative"
                     >{{ d.title }}

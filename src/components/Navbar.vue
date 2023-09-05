@@ -24,9 +24,8 @@
         <!-- nav-link -->
         <div class="font-semibold text-center">
             <ul class="flex flex-col mb-3" v-if="!isMobile">
-                <li class="m-3" v-for="d in data">
+                <li class="m-3" v-for="d in data" :key="d.id">
                     <span
-                        :key="d.id"
                         class="cursor-pointer transition hover:text-amber-700 border-solid hover:border-b-2 hover:border-amber-700"
                         :class="{
                             'text-amber-700 border-solid border-b-2 border-amber-700':
@@ -42,10 +41,10 @@
                 <li
                     class="m-3"
                     v-for="d in data"
+                    :key="d.id"
                     :class="isOpen ? 'block' : 'hidden'"
                 >
                     <span
-                        :key="d.id"
                         class="cursor-pointer transition hover:text-amber-700 border-solid hover:border-b-2 hover:border-amber-700"
                         :class="{
                             'text-amber-700 border-solid border-b-2 border-amber-700':
